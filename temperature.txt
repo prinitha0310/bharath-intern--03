@@ -1,0 +1,70 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TemperatureConverterApp {
+    private JTextField celsiusTextField;
+    private JLabel resultLabel;
+
+    public TemperatureConverterApp() {
+        // Create a JFrame (window) to hold the app
+        JFrame frame = new JFrame("Temperature Converter");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 150);
+        frame.setLayout(new FlowLayout());
+
+        // Create a label to display instructions
+        JLabel instructionLabel = new JLabel("Enter temperature in Celsius:");
+
+        // Create a text field for user input
+        celsiusTextField = new JTextField(10);
+
+        // Create a button to perform the conversion
+        JButton convertButton = new JButton("Convert");
+
+        // Create a label to display the result
+        resultLabel = new JLabel("");
+
+        // Add an ActionListener to the convert button
+        convertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                convertTemperature();
+            }
+        });
+
+        // Add components to the frame
+        frame.add(instructionLabel);
+        frame.add(celsiusTextField);
+        frame.add(convertButton);
+        frame.add(resultLabel);
+
+        // Make the frame visible
+        frame.setVisible(true);
+    }
+
+    private void convertTemperature() {
+        try {
+            // Get the temperature in Celsius from the text field
+            double celsius = Double.parseDouble(celsiusTextField.getText());
+
+            // Convert Celsius to Fahrenheit
+            double fahrenheit = (celsius * 9 / 5) + 32;
+
+            // Display the result
+            resultLabel.setText("Temperature in Fahrenheit: " + fahrenheit);
+        } catch (NumberFormatException ex) {
+            resultLabel.setText("Invalid input. Please enter a number.");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new TemperatureConverterApp();
+            }
+        });
+    }
+}

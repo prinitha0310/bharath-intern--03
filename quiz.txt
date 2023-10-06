@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class QuizApp {
+    private JFrame frame;
+    private JPanel panel;
+    private JLabel questionLabel;
+    private JRadioButton[] answerOptions;
+    private ButtonGroup buttonGroup;
+    private JButton nextButton;
+
+    private String[] questions = {
+        "What is the capital of France?",
+        "Which planet is known as the Red Planet?",
+        "What is 2 + 2?",
+    };
+
+    private String[][] options = {
+        {"Paris", "London", "Berlin", "Madrid"},
+        {"Mars", "Venus", "Earth", "Jupiter"},
+        {"3", "4", "5", "6"},
+    };
+
+    private int currentQuestionIndex = 0;
+    private int correctAnswers = 0;
+
+    public QuizApp() {
+        frame = new JFrame("Quiz App");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        questionLabel = new JLabel();
+        panel.add(questionLabel);
+
+        answerOptions = new JRadioButton[4];
+        buttonGroup = new ButtonGroup();
+        for (int i = 0; i < 4; i++) {
+            answerOptions[i] = new JRadioButton();
+            panel.add(answerOptions
+]
