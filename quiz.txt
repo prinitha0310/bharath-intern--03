@@ -1,45 +1,106 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
 
-public class QuizApp {
-    private JFrame frame;
-    private JPanel panel;
-    private JLabel questionLabel;
-    private JRadioButton[] answerOptions;
-    private ButtonGroup buttonGroup;
-    private JButton nextButton;
+        #quiz-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
 
-    private String[] questions = {
-        "What is the capital of France?",
-        "Which planet is known as the Red Planet?",
-        "What is 2 + 2?",
-    };
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
 
-    private String[][] options = {
-        {"Paris", "London", "Berlin", "Madrid"},
-        {"Mars", "Venus", "Earth", "Jupiter"},
-        {"3", "4", "5", "6"},
-    };
+<div id="quiz-container">
+    <h2>Quiz App</h2>
+    <p id="question"></p>
+    <div id="options"></div>
+    <button onclick="nextQuestion()">Next</button>
+    <p id="result"></p>
+</div>
 
-    private int currentQuestionIndex = 0;
-    private int correctAnswers = 0;
+<script>
+    const quizData = [
+        {
+            question: "What is the capital of France?",
+            options: ["Berlin", "Madrid", "Paris", "Rome"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "Which planet is known as the Red Planet?",
+            options: ["Earth", "Mars", "Jupiter", "Saturn"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "What is the largest mammal?",
+            options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+            correctAnswer: "Blue Whale"
+        }
+    ];
 
-    public QuizApp() {
-        frame = new JFrame("Quiz App");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+    let currentQuestion = 0;
+    let score = 0;
 
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    function loadQuestion() {
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
 
-        questionLabel = new JLabel();
-        panel.add(questionLabel);
+        questionElement.textContent = quizData[currentQuestion].question;
+        optionsElement.innerHTML = "";
 
-        answerOptions = new JRadioButton[4];
-        buttonGroup = new ButtonGroup();
-        for (int i = 0; i < 4; i++) {
-            answerOptions[i] = new JRadioButton();
-            panel.add(answerOptions
-]
+        quizData[currentQuestion].options.forEach((option) => {
+            const button = document.createElement("button");
+            button.textContent = option;
+            button.onclick = () => checkAnswer(option);
+            optionsElement.appendChild(button);
+        });
+    }
+
+    function checkAnswer(userAnswer) {
+        const correctAnswer = quizData[currentQuestion].correctAnswer;
+
+        if (userAnswer === correctAnswer) {
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        const resultElement = document.getElementById("result");
+        resultElement.textContent = `You scored ${score} out of ${quizData.length}!`;
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+        
